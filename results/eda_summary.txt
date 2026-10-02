@@ -1,0 +1,68 @@
+
+=== Species(all rows) ===
+specie
+Dog                    7442
+Cat                    2440
+NaN                      41
+Tigre                    12
+Felina                    7
+Leopardo                  7
+Porcine species           6
+felina                    5
+Saimiri boliviensis       4
+Other                     3
+Leprus europeus           2
+capra                     2
+Sparviero                 1
+Capra                     1
+
+=== Species(in scope) ===
+specie
+Dog    7442
+Cat    2440
+
+=== Quality(raw vs clean) ===
+Quality
+correct         6916
+positioning     1542
+exclude         1154
+underexposed     291
+overexposed       69
+Correct            1
+quality_clean
+correct         6917
+positioning     1542
+exclude         1154
+underexposed     291
+overexposed       69
+
+=== Projection(in scope) ===
+Projection
+LL    5604
+DV    3223
+VD    1055
+
+=== Quality * Projection ===
+Projection       DV    LL    VD   All
+quality_clean                        
+correct        2002  4155   717  6874
+exclude         240   769   106  1115
+overexposed      23    38     8    69
+positioning     823   505   206  1534
+underexposed    135   137    18   290
+All            3223  5604  1055  9882
+
+=== Projection Percentage ===
+Projection       DV    LL    VD
+quality_clean                  
+correct        62.1  74.1  68.0
+exclude         7.4  13.7  10.0
+overexposed     0.7   0.7   0.8
+positioning    25.5   9.0  19.5
+underexposed    4.2   2.4   1.7
+
+=== Sum of NaN ===
+Projection       0
+quality_clean    0
+rows: 9973, columns: 11 
+ in scope ['Dog', 'Cat']: 9882 (expexted: 9882)
