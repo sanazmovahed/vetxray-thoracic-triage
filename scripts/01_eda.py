@@ -18,6 +18,9 @@ IN_SCOPE_SPECIES = ["Dog", "Cat"]
 EXPECTED_IN_SCOPE = 9882 # ROW COUNT STATED IN THE DATASET DESCRIPTION
 XLSX_NAME = "File list with tags.xlsx"
 lines = []
+NON_DISEASE_TAGS = {"no_finding", "exclude"}
+MIN_POSITIVES = 50
+EXPECTED_DISEASES_TAGS = 17 # NUMBER OF LESION TAGS STATED IN THE DATASET DESCRIPTION
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -66,6 +69,40 @@ def add_clean_columns(df):
      
     return df
 
+def report_tags(df):
+    d = df[df["in_scope"]]
+    counts = d["tag_list"].explode().value_counts()
+    disease_counts = counts.drop(labels=list(NON_DISEASE_TAGS), errors = "ignore")
+    n_tags = d["tag_list"].apply(len)
+    
+    section("Tag counts")
+    say_table(counts)
+    
+    section("Disease Tag")
+    say(f"Found {len(disease_counts)} disease tags (expected {EXPECTED_DISEASES_TAGS})")
+    if len(disease_counts) != EXPECTED_DISEASES_TAGS:
+        say("Warning: count differs from dataset description")
+    say(", ".join(sorted(disease_counts.index)))
+    
+    section("Tags per image")
+    say_table(n_tags.value_counts().sort_index())    
+
+    section("No finding overlap")
+    nf = has_tag(d, "no_finding")
+    say(f"no_finding rows: {int(nf.sum())}")
+    say(f"no_finding with another tag: {int((nf & (n_tags > 1)).sum())}")
+    say(f"no_finding with exclude: {int((nf & has_tag(d, 'exclude')).sum())}")
+
+    section("Rare classes")
+    say("kept (>= MIN_POSITIVES):")
+    say_table(disease_counts[disease_counts >= MIN_POSITIVES])
+    say("rare (< MIN_POSITIVES):")
+    say_table(disease_counts[disease_counts < MIN_POSITIVES])
+
+    section("Threshold sensitivity")
+    for t in [50, 100, 150]:
+        say(f"threshold {t}: {int((disease_counts >= t).sum())} classes kept")    
+
 def report_basics(df):
     d = df[df["in_scope"]]
 
@@ -94,8 +131,9 @@ def report_basics(df):
 def main():
     args = parse_args()
     df = add_clean_columns(load_table(args.xlsx))
+    say(f"rows: {len(df)}, columns: {len(df.columns)} \n in scope {IN_SCOPE_SPECIES}: {EXPECTED_IN_SCOPE} (expected: {EXPECTED_IN_SCOPE})")
     report_basics(df)
-    say(f"rows: {len(df)}, columns: {len(df.columns)} \n in scope {IN_SCOPE_SPECIES}: {EXPECTED_IN_SCOPE} (expexted: {EXPECTED_IN_SCOPE})")
+    report_tags(df)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text("\n".join(lines) + "\n")
 

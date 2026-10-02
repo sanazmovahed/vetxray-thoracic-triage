@@ -1,3 +1,5 @@
+rows: 9973, columns: 11 
+ in scope ['Dog', 'Cat']: 9882 (expected: 9882)
 
 === Species(all rows) ===
 specie
@@ -64,5 +66,69 @@ underexposed    4.2   2.4   1.7
 === Sum of NaN ===
 Projection       0
 quality_clean    0
-rows: 9973, columns: 11 
- in scope ['Dog', 'Cat']: 9882 (expexted: 9882)
+
+=== Tag counts ===
+tag_list
+no_finding                3901
+exclude                   2230
+cardiomegaly              1730
+alveolar_pattern          1025
+bronchial_pattern          696
+pleural_effusion           465
+mass                       433
+interstitial_pattern       392
+pneumothorax               161
+pleural_mineralization     122
+megaesophagus              105
+foreign_body                74
+hernia                      31
+tracheal_collapse           19
+diaphragmatic_hernia        10
+fracture                     9
+pneumomediastinum            6
+pneumoderma                  6
+costal_fracture              1
+
+=== Disease Tag ===
+Found 17 disease tags (expected 17)
+alveolar_pattern, bronchial_pattern, cardiomegaly, costal_fracture, diaphragmatic_hernia, foreign_body, fracture, hernia, interstitial_pattern, mass, megaesophagus, pleural_effusion, pleural_mineralization, pneumoderma, pneumomediastinum, pneumothorax, tracheal_collapse
+
+=== Tags per image ===
+tag_list
+1    8514
+2    1218
+3     134
+4      16
+
+=== No finding overlap ===
+no_finding rows: 3901
+no_finding with another tag: 102
+no_finding with exclude: 0
+
+=== Rare classes ===
+kept (>= MIN_POSITIVES):
+tag_list
+cardiomegaly              1730
+alveolar_pattern          1025
+bronchial_pattern          696
+pleural_effusion           465
+mass                       433
+interstitial_pattern       392
+pneumothorax               161
+pleural_mineralization     122
+megaesophagus              105
+foreign_body                74
+rare (< MIN_POSITIVES):
+tag_list
+hernia                  31
+tracheal_collapse       19
+diaphragmatic_hernia    10
+fracture                 9
+pneumomediastinum        6
+pneumoderma              6
+costal_fracture          1
+
+=== Threshold sensitivity ===
+threshold 50: 10 classes kept
+threshold 100: 9 classes kept
+threshold 150: 7 classes kept
