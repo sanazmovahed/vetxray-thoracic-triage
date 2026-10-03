@@ -159,6 +159,51 @@ def report_checks(df):
     section("NOTE for exclude rows (top 15)")
     say_table(d.loc[ex_q | ex_tag, "NOTE"].value_counts(dropna=False).head(15))  
       
+def report_patients(df):
+    d = df[df["in_scope"]]
+
+    section("PatientName (aggregate only)")
+    say(f"missing PatientName: {int(d['PatientName'].isna().sum())}")
+    per_patient = d.groupby("PatientName").size()
+    say(f"unique PatientName values: {len(per_patient)}")
+    say_table(per_patient.describe())
+    say("names by number of images:")
+    say_table(per_patient.value_counts().sort_index().head(10))
+    say(f"largest groups (images per name): {per_patient.nlargest(5).tolist()}")
+    mixed = d.groupby("PatientName")["specie"].nunique() > 1
+    say(f"names used for both Dog and Cat: {int(mixed.sum())}")
+    
+def find_dicom_files(raw_dir):
+    files = []
+    for p in Path(raw_dir).glob("RX_?/**/*.dcm"):
+        if "__MACOSX" in p.parts or p.name.startswith("._"):
+            continue
+        files.append(p)
+    return files
+
+def report_disk(df, raw_dir):
+    section("Table vs disk")
+    files = find_dicom_files(raw_dir)
+    if not files:
+        say(f"WARNING: no .dcm files found under {raw_dir}")
+        return
+
+    names_disk = [p.name for p in files]
+    set_disk = set(names_disk)
+    d = df[df["in_scope"]]
+    all_names = set(df["FileName"])
+    scope_names = set(d["FileName"])
+
+    say(f".dcm files on disk (excluding __MACOSX): {len(names_disk)}")
+    say(f"unique file names on disk: {len(set_disk)}")
+    say(f"duplicate names across folders: {len(names_disk) - len(set_disk)}")
+    say(f"table rows: {len(df)}, unique FileName: {len(all_names)}")
+    say(f"in-scope rows missing on disk: {len(scope_names - set_disk)}")
+    say(f"all table rows missing on disk: {len(all_names - set_disk)}")
+    say(f"disk files not in table: {len(set_disk - all_names)}")
+    say(f"examples (disk only): {sorted(set_disk - all_names)[:5]}")
+    say(f"examples (table only): {sorted(all_names - set_disk)[:5]}")
+          
 def main():
     args = parse_args()
     df = add_clean_columns(load_table(args.xlsx))
@@ -166,6 +211,9 @@ def main():
     report_basics(df)
     report_tags(df)
     report_checks(df)
+    report_patients(df)
+    report_disk(df, args.raw_dir)
+    
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text("\n".join(lines) + "\n")
 
