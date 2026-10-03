@@ -128,12 +128,44 @@ def report_basics(df):
     section("Sum of NaN")
     say_table(d[["Projection", "quality_clean"]].isna().sum())
 
+def report_checks(df):
+    d = df[df["in_scope"]]
+    n_tags = d["tag_list"].apply(len)
+    nf = has_tag(d, "no_finding")
+    ex_tag = has_tag(d, "exclude")
+    ex_q = d["quality_clean"] == "exclude"
+    
+    section("no_finding companions")
+    companions = d.loc[nf & (n_tags > 1), "tag_list"].explode().value_counts()
+    say_table(companions.drop("no_finding", errors="ignore"))
+    
+    section("exclude: quality vs tag")
+    say_table(pd.crosstab(ex_q.rename("quality_exclude"), ex_tag.rename("tag_exclude")))
+    
+    section("repeated tags within a row")
+    has_dup = d["tag_list"].apply(lambda tags: len(tags) != len(set(tags)))
+    say(f"rows with a repeated tag: {int(has_dup.sum())}")
+    say(f"  of which quality exclude: {int((has_dup & ex_q).sum())}")
+    say(f"  of which tag exclude: {int((has_dup & ex_tag).sum())}")
+
+    section("Projection vs bronchial/interstitial (% positive)")
+    for tag in ["bronchial_pattern", "interstitial_pattern"]:
+        say(tag)
+        pct = pd.crosstab(d["Projection"], has_tag(d, tag).rename("positive"), normalize="index") * 100
+        say_table(pct.round(1))
+        
+    section("NOTE overall (top 15)")
+    say_table(d["NOTE"].value_counts(dropna=False).head(15))
+    section("NOTE for exclude rows (top 15)")
+    say_table(d.loc[ex_q | ex_tag, "NOTE"].value_counts(dropna=False).head(15))  
+      
 def main():
     args = parse_args()
     df = add_clean_columns(load_table(args.xlsx))
     say(f"rows: {len(df)}, columns: {len(df.columns)} \n in scope {IN_SCOPE_SPECIES}: {EXPECTED_IN_SCOPE} (expected: {EXPECTED_IN_SCOPE})")
     report_basics(df)
     report_tags(df)
+    report_checks(df)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text("\n".join(lines) + "\n")
 
