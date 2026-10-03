@@ -11,6 +11,7 @@ Usage:
 import argparse
 import pandas as pd
 from pathlib import Path
+from common import find_dicom_files
 
 REQUIRED_COLUMNS = {"FileName", "PatientName", "breed", "specie","Projection", "Quality", "TAG", "NOTE"}
 
@@ -173,13 +174,6 @@ def report_patients(df):
     mixed = d.groupby("PatientName")["specie"].nunique() > 1
     say(f"names used for both Dog and Cat: {int(mixed.sum())}")
     
-def find_dicom_files(raw_dir):
-    files = []
-    for p in Path(raw_dir).glob("RX_?/**/*.dcm"):
-        if "__MACOSX" in p.parts or p.name.startswith("._"):
-            continue
-        files.append(p)
-    return files
 
 def report_disk(df, raw_dir):
     section("Table vs disk")
