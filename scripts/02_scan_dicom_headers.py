@@ -21,11 +21,26 @@ import pydicom
 
 from common import find_dicom_files
 
-FIELDS = ["PatientID", "StudyInstanceUID", "SeriesInstanceUID", "Rows", "Columns",
-          "PhotometricInterpretation", "BitsStored", "PixelRepresentation",
-          "Manufacturer", "ManufacturerModelName", "ViewPosition"]
-SUMMARY_COLUMNS = ["PhotometricInterpretation", "BitsStored", "PixelRepresentation",
-                   "TransferSyntaxUID", "Manufacturer"]
+FIELDS = [
+    "PatientID",
+    "StudyInstanceUID",
+    "SeriesInstanceUID",
+    "Rows",
+    "Columns",
+    "PhotometricInterpretation",
+    "BitsStored",
+    "PixelRepresentation",
+    "Manufacturer",
+    "ManufacturerModelName",
+    "ViewPosition",
+]
+SUMMARY_COLUMNS = [
+    "PhotometricInterpretation",
+    "BitsStored",
+    "PixelRepresentation",
+    "TransferSyntaxUID",
+    "Manufacturer",
+]
 ID_COLUMNS = ["PatientID", "StudyInstanceUID"]
 
 lines = []
@@ -50,23 +65,33 @@ def parse_args():
         description="Scan DICOM headers and test pixel decoding."
     )
     parser.add_argument(
-        "--raw_dir", type=Path, default=Path("data/raw"),
+        "--raw_dir",
+        type=Path,
+        default=Path("data/raw"),
         help="folder containing the RX_1 ... RX_5 image folders (default: data/raw)",
     )
     parser.add_argument(
-        "--out_csv", type=Path, default=Path("data/interim/dicom_meta.csv"),
+        "--out_csv",
+        type=Path,
+        default=Path("data/interim/dicom_meta.csv"),
         help="per-file header table (contains identifiers, never commit it)",
     )
     parser.add_argument(
-        "--out_txt", type=Path, default=Path("results/dicom_scan_summary.txt"),
+        "--out_txt",
+        type=Path,
+        default=Path("results/dicom_scan_summary.txt"),
         help="aggregate text summary",
     )
     parser.add_argument(
-        "--limit", type=int, default=None,
+        "--limit",
+        type=int,
+        default=None,
         help="scan only the first N files (for quick tests)",
     )
     parser.add_argument(
-        "--decode_sample", type=int, default=30,
+        "--decode_sample",
+        type=int,
+        default=30,
         help="number of images to decode as a readability test",
     )
     return parser.parse_args()
@@ -170,7 +195,7 @@ def main():
     args = parse_args()
     files = sorted(find_dicom_files(args.raw_dir))
     if args.limit is not None:
-        files = files[:args.limit]
+        files = files[: args.limit]
     if not files:
         raise SystemExit("No .dcm files found. Check --raw_dir.")
     say(f"found {len(files)} .dcm files")
