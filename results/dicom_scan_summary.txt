@@ -1,0 +1,100 @@
+found 10234 .dcm files
+
+== Header scan ==
+files scanned: 10234, unreadable: 0
+files per folder:
+folder
+RX_1    2267
+RX_2    2571
+RX_3    2625
+RX_4    1671
+RX_5    1100
+
+== PatientID (aggregate only) ==
+missing or empty: 1
+unique values: 3737
+count    3737.000000
+mean        2.738293
+std         2.243480
+min         1.000000
+25%         2.000000
+50%         2.000000
+75%         3.000000
+max        31.000000
+values by number of images:
+count
+1      781
+2     1625
+3      581
+4      327
+5      139
+6       98
+7       62
+8       39
+9       10
+10      24
+largest groups (images per value): [31, 26, 25, 25, 23]
+
+== StudyInstanceUID (aggregate only) ==
+missing or empty: 0
+unique values: 8445
+count    8445.000000
+mean        1.211841
+std         0.660879
+min         1.000000
+25%         1.000000
+50%         1.000000
+75%         1.000000
+max        12.000000
+values by number of images:
+count
+1     7296
+2      757
+3      258
+4       83
+5       21
+6       17
+7        4
+8        4
+9        2
+10       1
+largest groups (images per value): [12, 11, 10, 9, 9]
+
+== Image size (rows, columns), top 5 ==
+Rows  Columns
+2836  2832       569
+2832  2836       544
+4932  4048        54
+3404  2704        44
+2535  2058         9
+
+== PhotometricInterpretation, top 5 ==
+PhotometricInterpretation
+MONOCHROME2    6895
+MONOCHROME1    3339
+
+== BitsStored, top 5 ==
+BitsStored
+8     6895
+14    3239
+12      98
+16       2
+
+== PixelRepresentation, top 5 ==
+PixelRepresentation
+0    10234
+
+== TransferSyntaxUID, top 5 ==
+TransferSyntaxUID
+1.2.840.10008.1.2.1    8271
+1.2.840.10008.1.2      1963
+
+== Manufacturer, top 5 ==
+Manufacturer
+Carestream Health, Inc.      6897
+FUJI PHOTO FILM Co., ltd.    3239
+Carestream Health              98
+
+== Pixel decoding test ==
+sampled 30 files (6 per folder), decoded: 30
+decoded dtypes: {'uint8': 17, 'uint16': 13}

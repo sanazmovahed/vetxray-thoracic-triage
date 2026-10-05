@@ -1,5 +1,7 @@
-rows: 9973, columns: 11 
- in scope ['Dog', 'Cat']: 9882 (expected: 9882)
+
+=== Overview ===
+rows: 9973, columns: 11
+in scope ['Dog', 'Cat']: 9882 (expected: 9882)
 
 === Species(all rows) ===
 specie
@@ -132,3 +134,103 @@ costal_fracture          1
 threshold 50: 10 classes kept
 threshold 100: 9 classes kept
 threshold 150: 7 classes kept
+
+=== no_finding companions ===
+tag_list
+pleural_mineralization    49
+foreign_body              32
+bronchial_pattern         14
+interstitial_pattern       4
+pleural_effusion           2
+megaesophagus              1
+
+=== exclude: quality vs tag ===
+tag_exclude      False  True 
+quality_exclude              
+False             7651   1116
+True                 1   1114
+
+=== repeated tags within a row ===
+rows with a repeated tag: 0
+  of which quality exclude: 0
+  of which tag exclude: 0
+
+=== Projection vs bronchial/interstitial (% positive) ===
+bronchial_pattern
+positive    False  True 
+Projection              
+DV           95.2    4.8
+LL           91.4    8.6
+VD           94.4    5.6
+interstitial_pattern
+positive    False  True 
+Projection              
+DV           98.1    1.9
+LL           95.1    4.9
+VD           94.7    5.3
+
+=== NOTE overall (top 15) ===
+NOTE
+NaN                  9231
+total_body            240
+check                 216
+altro radiologico      63
+moderate               46
+mild                   25
+severe                 20
+tube                   15
+spondyloarthrosis       2
+rib_fracture            2
+foreign body            2
+righette                2
+suture                  2
+check|total_body        1
+spinal_fracture         1
+
+=== NOTE for exclude rows (top 15) ===
+NOTE
+NaN                  2075
+total_body             74
+altro radiologico      63
+tube                   13
+righette                2
+tracheal_fracture       1
+cardiomegaly            1
+non è un gatto          1
+suture                  1
+
+=== PatientName (aggregate only) ===
+missing PatientName: 4
+unique PatientName values: 1940
+count    1940.000000
+mean        5.091753
+std         8.474993
+min         1.000000
+25%         2.000000
+50%         2.000000
+75%         5.000000
+max       106.000000
+names by number of images:
+1     351
+2     643
+3     265
+4     163
+5     105
+6      79
+7      52
+8      46
+9      23
+10     29
+largest groups (images per name): [106, 105, 87, 81, 72]
+names used for both Dog and Cat: 218
+
+=== Table vs disk ===
+.dcm files on disk (excluding __MACOSX): 10234
+unique file names on disk: 10234
+duplicate names across folders: 0
+table rows: 9973, unique FileName: 9971
+in-scope rows missing on disk: 0
+all table rows missing on disk: 1
+disk files not in table: 264
+examples (disk only): ['IM-0005-0002.dcm', 'IM-0015-0001-0353.dcm', 'IM-0015-0001-0358.dcm', 'IM-0015-0001-0418.dcm', 'IM-0015-0001-0547.dcm']
+examples (table only): ['IM-0001-0001.dcm']
