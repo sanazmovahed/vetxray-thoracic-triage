@@ -5,3 +5,4 @@ __pycache__/
 results/features/
 data/*
 !data/.gitkeep
+results/cache_preview.png
