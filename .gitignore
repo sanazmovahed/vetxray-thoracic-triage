@@ -5,4 +5,5 @@ __pycache__/
 results/features/
 data/*
 !data/.gitkeep
+!data/README.md
 results/cache_preview.png
