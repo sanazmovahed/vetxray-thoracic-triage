@@ -1,0 +1,6 @@
+images in manifest: 9878
+cached successfully: 9878
+failed: 0
+array shape: (9878, 224, 224), dtype: uint8
+size: 224x224, percentile window: 2.0-98.0
+pixel mean/std over 500 images (0-255): 91.8 / 84.1
