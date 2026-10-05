@@ -1,0 +1,175 @@
+
+== Table duplicates (in-scope rows) ==
+in-scope table rows: 9882
+exact duplicate rows removed: 0
+rows removed because duplicates disagree: 4
+conflicting file names (up to 5): ['IM-0015-0001-6412.dcm', 'IM-0015-0001-6774.dcm']
+in-scope rows kept: 9878
+
+== Join ==
+no DICOM header found for the row: 0
+header unreadable: 0
+usable images: 9878
+
+== Projection (table) vs ViewPosition (DICOM) ==
+ViewPosition  (blank)  DEFAULT  DV LARGE  DV SMALL  LATERAL  LATERAL LARGE  LATERAL SMALL  VD  VD LARGE  VD SMALL
+Projection                                                                                                       
+DV               3205        5         0         2        0              3              0   1         3         2
+LL               5521       42         5         1        6             17              4   1         5         0
+VD               1055        0         0         0        0              0              0   0         0         0
+
+== Candidate group keys ==
+              missing  groups  mean_images  max_images  mixed_species  multi_study  multi_name  multi_id
+key                                                                                                     
+patient_id          1    3697         2.67          31             34         2241          91         0
+study_uid           0    8377         1.18          10              0            0           1         0
+patient_name        4    1940         5.09         106            218         1293           0       517
+name_key            4    3053         3.23          76              0         1897           0       374
+union               0    2937         3.36          79             34         1865          88       365
+mixed_species: groups containing both Dog and Cat images
+multi_study: groups spanning more than one StudyInstanceUID
+multi_name / multi_id: groups with more than one PatientName / PatientID
+
+== Chosen grouping ==
+group key: union
+images: 9878, groups: 2937
+rows grouped by study (key missing): 0
+rows grouped by file (no key at all): 0
+
+== Group size distribution (chosen grouping) ==
+groups: 2937, mean images: 3.36, max: 79
+five largest groups (images): [79, 74, 53, 45, 45]
+groups by number of images:
+count
+1      589
+2     1132
+3      447
+4      265
+5      129
+6      106
+7       70
+8       40
+9       16
+10      21
+
+== Lesion tags in the manifest (positives) ==
+lesion tags: 17
+dz_cardiomegaly              1729
+dz_alveolar_pattern          1024
+dz_bronchial_pattern          696
+dz_pleural_effusion           464
+dz_mass                       433
+dz_interstitial_pattern       391
+dz_pneumothorax               161
+dz_pleural_mineralization     122
+dz_megaesophagus              105
+dz_foreign_body                74
+dz_hernia                      31
+dz_tracheal_collapse           19
+dz_diaphragmatic_hernia        10
+dz_fracture                     9
+dz_pneumoderma                  6
+dz_pneumomediastinum            6
+dz_costal_fracture              1
+
+== Main cohort (no exclude flag) ==
+images: 7648 of 9878
+patient groups: 2565
+positives per lesion tag in the cohort:
+dz_cardiomegaly              1729
+dz_alveolar_pattern          1024
+dz_bronchial_pattern          696
+dz_pleural_effusion           464
+dz_mass                       433
+dz_interstitial_pattern       391
+dz_pneumothorax               161
+dz_pleural_mineralization     122
+dz_megaesophagus              105
+dz_foreign_body                74
+dz_hernia                      31
+dz_tracheal_collapse           19
+dz_diaphragmatic_hernia        10
+dz_fracture                     9
+dz_pneumoderma                  6
+dz_pneumomediastinum            6
+dz_costal_fracture              1
+
+== Images and label prevalence by Manufacturer ==
+Manufacturer
+Carestream Health, Inc.      6870
+FUJI PHOTO FILM Co., ltd.    2910
+Carestream Health              98
+percent of images carrying each label:
+Manufacturer               Carestream Health  Carestream Health, Inc.  FUJI PHOTO FILM Co., ltd.
+dz_alveolar_pattern                      0.0                      8.1                       16.1
+dz_bronchial_pattern                     0.0                      6.8                        7.9
+dz_cardiomegaly                          0.0                     17.2                       18.7
+dz_foreign_body                          0.0                      1.0                        0.2
+dz_interstitial_pattern                  0.0                      2.8                        6.8
+dz_mass                                  2.0                      4.5                        4.3
+dz_megaesophagus                         0.0                      0.9                        1.6
+dz_pleural_effusion                      0.0                      4.8                        4.7
+dz_pleural_mineralization                0.0                      1.7                        0.3
+dz_pneumothorax                          0.0                      1.2                        2.6
+no_finding                               7.1                     41.5                       35.7
+tag_exclude                             90.8                     22.2                       21.2
+quality_exclude                         82.7                     10.2                       11.4
+
+== Images and label prevalence by folder ==
+folder
+RX_2    2566
+RX_3    2557
+RX_1    2249
+RX_4    1475
+RX_5    1031
+percent of images carrying each label:
+folder                     RX_1  RX_2  RX_3  RX_4  RX_5
+dz_alveolar_pattern         7.0   6.0  13.2  15.5  14.2
+dz_bronchial_pattern        9.9   5.5   5.4   5.2  11.4
+dz_cardiomegaly            16.5  20.8  15.4  15.3  19.7
+dz_foreign_body             1.0   1.1   0.7   0.3   0.0
+dz_interstitial_pattern     3.5   2.2   3.1   6.6   7.7
+dz_mass                     5.5   5.3   3.0   4.0   3.6
+dz_megaesophagus            1.3   0.8   0.4   2.2   1.3
+dz_pleural_effusion         4.7   3.5   5.6   4.9   5.1
+dz_pleural_mineralization   3.0   1.8   0.2   0.3   0.0
+dz_pneumothorax             1.0   1.4   1.7   2.2   2.6
+no_finding                 38.2  43.5  39.6  44.0  25.5
+tag_exclude                21.1  19.9  27.1  15.5  31.1
+quality_exclude             7.5  12.1  13.8   7.9  16.1
+
+== Manufacturer vs folder ==
+folder                     RX_1  RX_2  RX_3  RX_4  RX_5
+Manufacturer                                           
+Carestream Health             0    21    77     0     0
+Carestream Health, Inc.    2236  2545  2089     0     0
+FUJI PHOTO FILM Co., ltd.    13     0   391  1475  1031
+
+== BitsStored vs Manufacturer ==
+Manufacturer  Carestream Health  Carestream Health, Inc.  FUJI PHOTO FILM Co., ltd.
+BitsStored                                                                         
+8                             0                     6868                          0
+12                           98                        0                          0
+14                            0                        0                       2910
+16                            0                        2                          0
+
+== exclude flags ==
+quality (rows) vs tag exclude (columns):
+tag_exclude   False  True 
+quality                   
+correct        6828     44
+exclude           1   1114
+overexposed      25     43
+positioning     717    816
+underexposed     78    212
+tag exclude without quality exclude: 1115
+tag exclude rows that also carry a lesion tag: 0
+percent tag exclude by Projection:
+Projection
+DV    24.7
+LL    20.8
+VD    25.3
+percent tag exclude by specie:
+specie
+Cat    32.2
+Dog    19.4
