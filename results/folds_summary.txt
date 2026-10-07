@@ -1,0 +1,62 @@
+== Cohort ==
+manifest rows: 9878
+main cohort: 7648 images, 2565 groups
+outside cohort (fold -1): 2230
+classes kept (>= 50 positives): 10; dropped: 7
+
+== Seed 0 ==
+groups split across more than one fold: 0 (must be 0)
+images per fold:
+fold_s0     0     1     2     3     4
+images   1528  1528  1530  1529  1533
+positives per class per fold:
+                           fold0  fold1  fold2  fold3  fold4
+dz_cardiomegaly              347    345    346    346    345
+dz_alveolar_pattern          205    205    204    205    205
+dz_bronchial_pattern         139    139    140    139    139
+dz_pleural_effusion           92     93     93     93     93
+dz_mass                       86     87     86     87     87
+dz_interstitial_pattern       78     78     78     78     79
+dz_pneumothorax               32     32     32     32     33
+dz_pleural_mineralization     25     24     24     25     24
+dz_megaesophagus              21     21     21     21     21
+dz_foreign_body               15     15     14     15     15
+largest relative spread across folds (max-min)/mean: 0.07
+
+== Seed 1 ==
+groups split across more than one fold: 0 (must be 0)
+images per fold:
+fold_s1     0     1     2     3     4
+images   1529  1529  1529  1529  1532
+positives per class per fold:
+                           fold0  fold1  fold2  fold3  fold4
+dz_cardiomegaly              346    346    346    346    345
+dz_alveolar_pattern          205    205    204    205    205
+dz_bronchial_pattern         139    139    139    140    139
+dz_pleural_effusion           93     93     93     93     92
+dz_mass                       87     87     86     87     86
+dz_interstitial_pattern       78     79     78     78     78
+dz_pneumothorax               32     33     32     32     32
+dz_pleural_mineralization     25     24     24     25     24
+dz_megaesophagus              21     21     21     21     21
+dz_foreign_body               15     15     15     15     14
+largest relative spread across folds (max-min)/mean: 0.07
+
+== Seed 2 ==
+groups split across more than one fold: 0 (must be 0)
+images per fold:
+fold_s2     0     1     2     3     4
+images   1528  1529  1529  1529  1533
+positives per class per fold:
+                           fold0  fold1  fold2  fold3  fold4
+dz_cardiomegaly              346    345    346    346    346
+dz_alveolar_pattern          205    204    205    205    205
+dz_bronchial_pattern         139    140    139    139    139
+dz_pleural_effusion           93     92     93     93     93
+dz_mass                       87     86     86     87     87
+dz_interstitial_pattern       79     78     78     78     78
+dz_pneumothorax               32     32     33     32     32
+dz_pleural_mineralization     24     25     24     25     24
+dz_megaesophagus              21     21     21     21     21
+dz_foreign_body               14     15     15     15     15
+largest relative spread across folds (max-min)/mean: 0.07
