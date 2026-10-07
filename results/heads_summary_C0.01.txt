@@ -1,0 +1,79 @@
+rows: 9878, classes: 10, C: 0.01
+
+== imagenet, seed 0 (12s) ==
+  dz_cardiomegaly              positives  1729  AUROC 0.658
+  dz_alveolar_pattern          positives  1024  AUROC 0.731
+  dz_bronchial_pattern         positives   696  AUROC 0.633
+  dz_pleural_effusion          positives   464  AUROC 0.856
+  dz_mass                      positives   433  AUROC 0.567
+  dz_interstitial_pattern      positives   391  AUROC 0.659
+  dz_pneumothorax              positives   161  AUROC 0.772
+  dz_pleural_mineralization    positives   122  AUROC 0.802
+  dz_megaesophagus             positives   105  AUROC 0.635
+  dz_foreign_body              positives    74  AUROC 0.724
+  macro AUROC: 0.704
+
+== imagenet, seed 1 (9s) ==
+  dz_cardiomegaly              positives  1729  AUROC 0.661
+  dz_alveolar_pattern          positives  1024  AUROC 0.730
+  dz_bronchial_pattern         positives   696  AUROC 0.631
+  dz_pleural_effusion          positives   464  AUROC 0.865
+  dz_mass                      positives   433  AUROC 0.575
+  dz_interstitial_pattern      positives   391  AUROC 0.665
+  dz_pneumothorax              positives   161  AUROC 0.792
+  dz_pleural_mineralization    positives   122  AUROC 0.813
+  dz_megaesophagus             positives   105  AUROC 0.603
+  dz_foreign_body              positives    74  AUROC 0.726
+  macro AUROC: 0.706
+
+== imagenet, seed 2 (9s) ==
+  dz_cardiomegaly              positives  1729  AUROC 0.659
+  dz_alveolar_pattern          positives  1024  AUROC 0.736
+  dz_bronchial_pattern         positives   696  AUROC 0.645
+  dz_pleural_effusion          positives   464  AUROC 0.852
+  dz_mass                      positives   433  AUROC 0.580
+  dz_interstitial_pattern      positives   391  AUROC 0.648
+  dz_pneumothorax              positives   161  AUROC 0.789
+  dz_pleural_mineralization    positives   122  AUROC 0.818
+  dz_megaesophagus             positives   105  AUROC 0.648
+  dz_foreign_body              positives    74  AUROC 0.712
+  macro AUROC: 0.709
+
+== dinov2, seed 0 (4s) ==
+  dz_cardiomegaly              positives  1729  AUROC 0.741
+  dz_alveolar_pattern          positives  1024  AUROC 0.823
+  dz_bronchial_pattern         positives   696  AUROC 0.718
+  dz_pleural_effusion          positives   464  AUROC 0.944
+  dz_mass                      positives   433  AUROC 0.689
+  dz_interstitial_pattern      positives   391  AUROC 0.738
+  dz_pneumothorax              positives   161  AUROC 0.862
+  dz_pleural_mineralization    positives   122  AUROC 0.854
+  dz_megaesophagus             positives   105  AUROC 0.692
+  dz_foreign_body              positives    74  AUROC 0.794
+  macro AUROC: 0.786
+
+== dinov2, seed 1 (4s) ==
+  dz_cardiomegaly              positives  1729  AUROC 0.743
+  dz_alveolar_pattern          positives  1024  AUROC 0.820
+  dz_bronchial_pattern         positives   696  AUROC 0.709
+  dz_pleural_effusion          positives   464  AUROC 0.939
+  dz_mass                      positives   433  AUROC 0.678
+  dz_interstitial_pattern      positives   391  AUROC 0.741
+  dz_pneumothorax              positives   161  AUROC 0.863
+  dz_pleural_mineralization    positives   122  AUROC 0.858
+  dz_megaesophagus             positives   105  AUROC 0.683
+  dz_foreign_body              positives    74  AUROC 0.798
+  macro AUROC: 0.783
+
+== dinov2, seed 2 (4s) ==
+  dz_cardiomegaly              positives  1729  AUROC 0.741
+  dz_alveolar_pattern          positives  1024  AUROC 0.819
+  dz_bronchial_pattern         positives   696  AUROC 0.716
+  dz_pleural_effusion          positives   464  AUROC 0.938
+  dz_mass                      positives   433  AUROC 0.674
+  dz_interstitial_pattern      positives   391  AUROC 0.737
+  dz_pneumothorax              positives   161  AUROC 0.869
+  dz_pleural_mineralization    positives   122  AUROC 0.860
+  dz_megaesophagus             positives   105  AUROC 0.672
+  dz_foreign_body              positives    74  AUROC 0.772
+  macro AUROC: 0.780
