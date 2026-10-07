@@ -1,6 +1,6 @@
 rows: 9878, classes: 10, C: 0.1
 
-== imagenet, seed 0 (16s) ==
+== imagenet, seed 0 (15s) ==
   dz_cardiomegaly              positives  1729  AUROC 0.638
   dz_alveolar_pattern          positives  1024  AUROC 0.686
   dz_bronchial_pattern         positives   696  AUROC 0.604
@@ -13,7 +13,7 @@ rows: 9878, classes: 10, C: 0.1
   dz_foreign_body              positives    74  AUROC 0.695
   macro AUROC: 0.678
 
-== imagenet, seed 1 (15s) ==
+== imagenet, seed 1 (12s) ==
   dz_cardiomegaly              positives  1729  AUROC 0.642
   dz_alveolar_pattern          positives  1024  AUROC 0.683
   dz_bronchial_pattern         positives   696  AUROC 0.600
@@ -26,7 +26,7 @@ rows: 9878, classes: 10, C: 0.1
   dz_foreign_body              positives    74  AUROC 0.699
   macro AUROC: 0.682
 
-== imagenet, seed 2 (13s) ==
+== imagenet, seed 2 (12s) ==
   dz_cardiomegaly              positives  1729  AUROC 0.640
   dz_alveolar_pattern          positives  1024  AUROC 0.693
   dz_bronchial_pattern         positives   696  AUROC 0.613
@@ -39,7 +39,7 @@ rows: 9878, classes: 10, C: 0.1
   dz_foreign_body              positives    74  AUROC 0.688
   macro AUROC: 0.684
 
-== dinov2, seed 0 (6s) ==
+== dinov2, seed 0 (7s) ==
   dz_cardiomegaly              positives  1729  AUROC 0.732
   dz_alveolar_pattern          positives  1024  AUROC 0.804
   dz_bronchial_pattern         positives   696  AUROC 0.689
@@ -65,7 +65,7 @@ rows: 9878, classes: 10, C: 0.1
   dz_foreign_body              positives    74  AUROC 0.823
   macro AUROC: 0.770
 
-== dinov2, seed 2 (7s) ==
+== dinov2, seed 2 (6s) ==
   dz_cardiomegaly              positives  1729  AUROC 0.732
   dz_alveolar_pattern          positives  1024  AUROC 0.797
   dz_bronchial_pattern         positives   696  AUROC 0.683

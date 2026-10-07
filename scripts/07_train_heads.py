@@ -4,8 +4,9 @@ For every backbone and every fold seed (columns fold_s<seed> of folds.csv):
     - for each fold k, fit on the other folds of the main cohort, predict fold k
     - standardization is fitted on the training part only (no leakage)
     - one logistic regression per lesion class (multi-label, one-vs-rest)
-Rows outside the main cohort (fold -1) are never used for fitting. They get the
-average prediction of the five fold models, kept for the separate exclude analysis.
+Rows outside the main cohort (fold -1) are never used for fitting. probs holds the
+average of the five fold models for them, and outside_by_fold keeps each single
+model's prediction (shape folds x outside rows x classes) for the exclude analysis.
 
 Outputs:
     data/preds/oof_<backbone>_s<seed>.npz   probs (N, C) float32, fold (N,), classes
@@ -70,7 +71,7 @@ def run_one(features, labels, fold, in_cohort, C, max_iter, n_jobs):
     n, n_classes = len(features), labels.shape[1]
     probs = np.zeros((n, n_classes), dtype=np.float32)
     outside = ~in_cohort
-    outside_sum = np.zeros((int(outside.sum()), n_classes), dtype=np.float64)
+    outside_by_fold = []
     fold_ids = sorted(int(f) for f in np.unique(fold[in_cohort]))
 
     for k in fold_ids:
@@ -86,12 +87,15 @@ def run_one(features, labels, fold, in_cohort, C, max_iter, n_jobs):
             delayed(fit_predict_class)(x_train, labels[train, c], [x_test, x_out], C, max_iter)
             for c in range(n_classes)
         )
+        out_k = np.zeros((int(outside.sum()), n_classes), dtype=np.float32)
         for c, (p_test, p_out) in enumerate(results):
             probs[test, c] = p_test
-            outside_sum[:, c] += p_out
+            out_k[:, c] = p_out
+        outside_by_fold.append(out_k)
 
-    probs[outside] = (outside_sum / len(fold_ids)).astype(np.float32)
-    return probs
+    out_stack = np.stack(outside_by_fold)  # (n_folds, n_outside, n_classes), one model per fold
+    probs[outside] = out_stack.mean(axis=0)
+    return probs, out_stack
 
 
 def main():
@@ -122,11 +126,12 @@ def main():
             fold = folds[f"fold_s{seed}"].to_numpy()
             in_cohort = fold >= 0
             start = time.time()
-            probs = run_one(features, labels, fold, in_cohort, args.C, args.max_iter, args.n_jobs)
+            probs, out_stack = run_one(features, labels, fold, in_cohort, args.C, args.max_iter, args.n_jobs)
 
             np.savez_compressed(
                 Path(args.out_dir) / f"oof_{backbone}_s{seed}.npz",
                 probs=probs, fold=fold.astype(np.int8), classes=np.array(classes),
+                outside_by_fold=out_stack,
             )
 
             say(f"\n== {backbone}, seed {seed} ({time.time() - start:.0f}s) ==")
