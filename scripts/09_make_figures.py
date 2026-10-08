@@ -16,6 +16,10 @@ depend on colour alone.
 Usage:
     python scripts/09_make_figures.py
     python scripts/09_make_figures.py --preds_dir data/preds_C0.01 --eval_dir results/C0.01 --fig_dir results/figures_C0.01
+    # each backbone at its own C (reference = ResNet-50 at C=0.001, DINOv2 at C=0.01):
+    python scripts/09_make_figures.py --preds_dir_ref data/preds_C0.001 --eval_dir_ref results/C0.001 \\
+        --preds_dir data/preds_C0.01 --eval_dir results/C0.01 --fig_dir results/figures_bestC \\
+        --out_txt results/paired_summary_bestC.txt
 """
 
 import argparse
@@ -43,6 +47,11 @@ def parse_args():
     p.add_argument("--manifest", default="data/interim/manifest.csv")
     p.add_argument("--classes", default="data/interim/classes.json")
     p.add_argument("--preds_dir", default="data/preds")
+    p.add_argument("--preds_dir_ref", default=None,
+                   help="predictions folder of the reference (first) backbone, if it was run with a "
+                        "different C than the second one; default: same as --preds_dir")
+    p.add_argument("--eval_dir_ref", default=None,
+                   help="eval folder of the reference backbone; default: same as --eval_dir")
     p.add_argument("--eval_dir", default="results", help="folder with eval_<backbone>.csv from 08")
     p.add_argument("--fig_dir", default="results/figures")
     p.add_argument("--out_txt", default="results/paired_summary.txt")
@@ -230,15 +239,19 @@ def main():
     Path(args.fig_dir).mkdir(parents=True, exist_ok=True)
 
     probs, masks = {}, []
-    for bb in args.backbones:
-        probs[bb], mask = load_probs(args.preds_dir, bb, args.seeds)
+    for i, bb in enumerate(args.backbones):
+        folder = args.preds_dir_ref if (i == 0 and args.preds_dir_ref) else args.preds_dir
+        probs[bb], mask = load_probs(folder, bb, args.seeds)
         masks.append(mask)
     if not np.array_equal(masks[0], masks[1]):
         raise SystemExit("the two backbones use different cohorts; rerun 07 for both")
     labels = labels_all[masks[0]]
     groups = manifest["group"].to_numpy()[masks[0]]
 
-    tables = {bb: pd.read_csv(Path(args.eval_dir) / f"eval_{bb}.csv") for bb in args.backbones}
+    tables = {}
+    for i, bb in enumerate(args.backbones):
+        folder = args.eval_dir_ref if (i == 0 and args.eval_dir_ref) else args.eval_dir
+        tables[bb] = pd.read_csv(Path(folder) / f"eval_{bb}.csv")
     fig_auroc(tables, args.backbones, args.fig_dir)
     fig_reliability(probs, labels, classes, args.backbones, args.reliability_classes, args.fig_dir)
     fig_selective(probs, labels, args.backbones, args.fig_dir, rng)

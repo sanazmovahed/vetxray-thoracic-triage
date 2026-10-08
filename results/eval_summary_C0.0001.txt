@@ -1,0 +1,106 @@
+
+======== imagenet ========
+cohort images: 7648, groups: 2565, seeds: [0, 1, 2]
+
+-- 1. Discrimination (OOF, seed-averaged probabilities) --
+                    class  positives  auroc  auroc_lo  auroc_hi  auroc_seed_sd    ap  prevalence
+          dz_cardiomegaly       1729  0.677     0.659     0.698          0.001 0.380       0.226
+      dz_alveolar_pattern       1024  0.750     0.730     0.765          0.001 0.340       0.134
+     dz_bronchial_pattern        696  0.666     0.637     0.690          0.004 0.166       0.091
+      dz_pleural_effusion        464  0.820     0.795     0.843          0.001 0.306       0.061
+                  dz_mass        433  0.608     0.580     0.637          0.006 0.090       0.057
+  dz_interstitial_pattern        391  0.681     0.652     0.711          0.004 0.098       0.051
+          dz_pneumothorax        161  0.736     0.678     0.786          0.004 0.070       0.021
+dz_pleural_mineralization        122  0.839     0.802     0.871          0.002 0.069       0.016
+         dz_megaesophagus        105  0.624     0.572     0.668          0.010 0.023       0.014
+          dz_foreign_body         74  0.712     0.661     0.765          0.006 0.032       0.010
+macro AUROC 0.711  (95% CI 0.701-0.725); per-seed macro: [0.712, 0.707, 0.711]
+
+-- 2. Calibration (ECE, Brier; Platt cross-fitted over seed-0 folds) --
+                    class  ece_raw  ece_platt  brier_raw  brier_platt
+          dz_cardiomegaly   0.0373     0.0060     0.1647       0.1624
+      dz_alveolar_pattern   0.0307     0.0045     0.1050       0.1030
+     dz_bronchial_pattern   0.0108     0.0062     0.0806       0.0802
+      dz_pleural_effusion   0.0302     0.0043     0.0522       0.0491
+                  dz_mass   0.0093     0.0048     0.0531       0.0531
+  dz_interstitial_pattern   0.0081     0.0018     0.0478       0.0476
+          dz_pneumothorax   0.0000     0.0020     0.0204       0.0203
+dz_pleural_mineralization   0.0000     0.0018     0.0153       0.0152
+         dz_megaesophagus   0.0001     0.0003     0.0135       0.0135
+          dz_foreign_body   0.0000     0.0003     0.0096       0.0095
+macro ECE raw 0.0126 -> Platt 0.0032
+note: the Platt maps are fitted on out-of-fold probabilities of other folds, whose models saw the evaluated fold; treat the recalibrated numbers as slightly optimistic.
+
+-- 3. Selective prediction (per class, balanced accuracy on retained images) --
+decision thresholds (Youden's J on the out-of-fold probabilities): cardiomegaly 0.237, alveolar_pattern 0.137, bronchial_pattern 0.095, pleural_effusion 0.066, mass 0.061, interstitial_pattern 0.051, pneumothorax 0.022, pleural_mineralization 0.020, megaesophagus 0.012, foreign_body 0.010
+ coverage  n_kept  classes  balacc_uncertainty  balacc_random
+      1.0    7648       10               0.670           0.67
+      0.9    6883       10               0.677           0.67
+      0.8    6118       10               0.688           0.67
+      0.7    5354       10               0.700           0.67
+      0.5    3824       10               0.728           0.67
+per class, the images closest to the decision threshold are set aside first. A gain above the random column is what selective prediction has to show. The thresholds are chosen on the same out-of-fold probabilities, which is optimistic but applies equally to the random column. Classes with <5 positives or negatives left are skipped.
+
+-- 4. Per manufacturer (macro AUROC over classes with >=10 positives and negatives) --
+Carestream Health, Inc.: images 5347, macro AUROC 0.712
+FUJI PHOTO FILM Co., ltd.: images 2292, macro AUROC 0.651
+
+-- 5. Excluded images: model uncertainty vs main cohort --
+mean uncertainty: main cohort 0.2133, excluded 0.2154
+AUROC of uncertainty for 'excluded vs main cohort': 0.530 (0.5 = no signal)
+  quality_exclude=True (1115 images): AUROC 0.571
+  tag_exclude=True (2229 images): AUROC 0.530
+both sides use a single model's prediction per image, so the comparison is fair. Excluded images differ in other ways too (quality, projection), so a positive result shows a link, not a cause.
+
+======== dinov2 ========
+cohort images: 7648, groups: 2565, seeds: [0, 1, 2]
+
+-- 1. Discrimination (OOF, seed-averaged probabilities) --
+                    class  positives  auroc  auroc_lo  auroc_hi  auroc_seed_sd    ap  prevalence
+          dz_cardiomegaly       1729  0.683     0.661     0.698          0.001 0.387       0.226
+      dz_alveolar_pattern       1024  0.773     0.760     0.790          0.001 0.376       0.134
+     dz_bronchial_pattern        696  0.660     0.638     0.677          0.002 0.177       0.091
+      dz_pleural_effusion        464  0.878     0.862     0.895          0.001 0.355       0.061
+                  dz_mass        433  0.630     0.591     0.662          0.006 0.102       0.057
+  dz_interstitial_pattern        391  0.680     0.653     0.708          0.005 0.106       0.051
+          dz_pneumothorax        161  0.717     0.677     0.768          0.005 0.053       0.021
+dz_pleural_mineralization        122  0.854     0.824     0.885          0.002 0.086       0.016
+         dz_megaesophagus        105  0.610     0.557     0.658          0.003 0.020       0.014
+          dz_foreign_body         74  0.641     0.572     0.694          0.008 0.023       0.010
+macro AUROC 0.713  (95% CI 0.702-0.724); per-seed macro: [0.713, 0.711, 0.711]
+
+-- 2. Calibration (ECE, Brier; Platt cross-fitted over seed-0 folds) --
+                    class  ece_raw  ece_platt  brier_raw  brier_platt
+          dz_cardiomegaly   0.0452     0.0129     0.1666       0.1616
+      dz_alveolar_pattern   0.0417     0.0096     0.1036       0.0998
+     dz_bronchial_pattern   0.0118     0.0130     0.0809       0.0802
+      dz_pleural_effusion   0.0456     0.0103     0.0518       0.0464
+                  dz_mass   0.0097     0.0010     0.0530       0.0527
+  dz_interstitial_pattern   0.0066     0.0052     0.0477       0.0475
+          dz_pneumothorax   0.0000     0.0010     0.0204       0.0204
+dz_pleural_mineralization   0.0000     0.0000     0.0154       0.0151
+         dz_megaesophagus   0.0000     0.0000     0.0135       0.0135
+          dz_foreign_body   0.0000     0.0001     0.0096       0.0096
+macro ECE raw 0.0161 -> Platt 0.0053
+note: the Platt maps are fitted on out-of-fold probabilities of other folds, whose models saw the evaluated fold; treat the recalibrated numbers as slightly optimistic.
+
+-- 3. Selective prediction (per class, balanced accuracy on retained images) --
+decision thresholds (Youden's J on the out-of-fold probabilities): cardiomegaly 0.226, alveolar_pattern 0.150, bronchial_pattern 0.104, pleural_effusion 0.074, mass 0.059, interstitial_pattern 0.049, pneumothorax 0.021, pleural_mineralization 0.023, megaesophagus 0.011, foreign_body 0.011
+ coverage  n_kept  classes  balacc_uncertainty  balacc_random
+      1.0    7648       10               0.674          0.674
+      0.9    6883       10               0.682          0.673
+      0.8    6118       10               0.691          0.674
+      0.7    5354       10               0.699          0.675
+      0.5    3824       10               0.676          0.675
+per class, the images closest to the decision threshold are set aside first. A gain above the random column is what selective prediction has to show. The thresholds are chosen on the same out-of-fold probabilities, which is optimistic but applies equally to the random column. Classes with <5 positives or negatives left are skipped.
+
+-- 4. Per manufacturer (macro AUROC over classes with >=10 positives and negatives) --
+Carestream Health, Inc.: images 5347, macro AUROC 0.713
+FUJI PHOTO FILM Co., ltd.: images 2292, macro AUROC 0.663
+
+-- 5. Excluded images: model uncertainty vs main cohort --
+mean uncertainty: main cohort 0.2146, excluded 0.2158
+AUROC of uncertainty for 'excluded vs main cohort': 0.519 (0.5 = no signal)
+  quality_exclude=True (1115 images): AUROC 0.553
+  tag_exclude=True (2229 images): AUROC 0.519
+both sides use a single model's prediction per image, so the comparison is fair. Excluded images differ in other ways too (quality, projection), so a positive result shows a link, not a cause.
