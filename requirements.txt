@@ -4,4 +4,4 @@ pydicom
 matplotlib
 Pillow
 joblib
-scikit-learn
+scikit-learnmatplotlib

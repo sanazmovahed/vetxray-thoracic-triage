@@ -1,0 +1,13 @@
+AUROC difference, DINOv2 ViT-B/14 minus ResNet-50 (ImageNet) (same images, same groups resampled together, 1000 bootstrap draws)
+macro AUROC difference: +0.082  (95% CI +0.067 to +0.096)
+per class:
+  dz_cardiomegaly              +0.095  (+0.076 to +0.113)  interval excludes 0
+  dz_alveolar_pattern          +0.105  (+0.083 to +0.126)  interval excludes 0
+  dz_bronchial_pattern         +0.062  (+0.032 to +0.090)  interval excludes 0
+  dz_pleural_effusion          +0.082  (+0.061 to +0.105)  interval excludes 0
+  dz_mass                      +0.089  (+0.047 to +0.125)  interval excludes 0
+  dz_interstitial_pattern      +0.039  (-0.002 to +0.077)  interval includes 0
+  dz_pneumothorax              +0.081  (+0.026 to +0.135)  interval excludes 0
+  dz_pleural_mineralization    +0.050  (+0.016 to +0.085)  interval excludes 0
+  dz_megaesophagus             +0.069  (-0.025 to +0.161)  interval includes 0
+  dz_foreign_body              +0.148  (+0.066 to +0.226)  interval excludes 0

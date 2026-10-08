@@ -7,3 +7,7 @@ data/*
 !data/.gitkeep
 !data/README.md
 results/cache_preview.png
+results/figures*/
+
+results/figures*/
+data/preds*/
